@@ -1,27 +1,27 @@
 package com.example.springdeeply;
 
-import com.example.springdeeply.slices.organizations.api.dtos.OrganizationDto;
+import com.example.springdeeply.slices.organizations.persistence.OrganizationsRepository;
+import com.example.springdeeply.slices.organizations.persistence.dao.OrganizationEntity;
 import com.example.springdeeply.slices.organizations.service.OrganizationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class SpringDeeplyApplication implements CommandLineRunner {
+public class SpringDeeplyApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringDeeplyApplication.class, args);
     }
 
-    @Autowired
-    OrganizationsService service;
-    
-    @Override
-    public void run(String... args) throws Exception {
-        service.saveOrganization(OrganizationDto.builder()
-                .id(2)
-                .name("Name2")
-                .build());
+    @Bean
+    public CommandLineRunner commandLineRunner(OrganizationsRepository repository) {
+        return (args) -> {
+          repository.save(new OrganizationEntity(1L, "Name1"));
+          repository.save(new OrganizationEntity(2L, "Name2"));
+          repository.save(new OrganizationEntity(3L, "Name3"));
+        };
     }
 }

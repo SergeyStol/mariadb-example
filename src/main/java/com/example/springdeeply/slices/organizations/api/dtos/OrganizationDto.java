@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrganizationDto {
     private long id;
-    private String name;
+    protected String organizationName;
 }
